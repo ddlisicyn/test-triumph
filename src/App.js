@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Table } from './components/Table';
+import { Form } from './components/Form';
 
 const columns = [
   {
@@ -39,8 +40,21 @@ const data = [
   { id: 5, name: 'name5', type: 'side', color: '#f8f8f8'},
 ];
 
+if (!localStorage.getItem('id1')) {
+  data.forEach(item => {
+    localStorage.setItem(`id${item.id}`, item.id);
+  })
+}
+
+const dataFromLocalStorage = [];
+   for (let i = 0; i < data.length; i++) {
+     if (!!localStorage.getItem(`id${i + 1}`)) {
+      dataFromLocalStorage.push(data[i]);
+     }
+   } 
+
 export default function App() {
-  const [rows, setRows] = useState(data);
+  const [rows, setRows] = useState(dataFromLocalStorage);
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleSelectionChange = (selection) => {
@@ -50,6 +64,14 @@ export default function App() {
   const handleDeleteClick = () => {
     const set = new Set(selectedRows);
     setRows(rows.filter(row => !set.has(row.id)));
+    selectedRows.forEach(row => localStorage.removeItem(`id${row}`));
+  }
+
+  const addNewRow = (inputs) => {
+    const length = data.length + 1;
+    setRows(rows.concat([{...inputs, id: length}]));
+    data.push({...inputs, id: length});
+    localStorage.setItem(`id${length}`, length);
   }
 
   return (
@@ -60,6 +82,7 @@ export default function App() {
       onSelectionChange={handleSelectionChange}
      />
      <button onClick={handleDeleteClick}>Delete</button>
+     <Form addNewRow={addNewRow} />
     </div>
   );
 }
