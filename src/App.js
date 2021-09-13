@@ -42,16 +42,15 @@ const data = [
 
 if (!localStorage.getItem('id1')) {
   data.forEach(item => {
-    localStorage.setItem(`id${item.id}`, item.id);
+    localStorage.setItem(`id${item.id}`, JSON.stringify(item));
   })
 }
 
 const dataFromLocalStorage = [];
-   for (let i = 0; i < data.length; i++) {
-     if (!!localStorage.getItem(`id${i + 1}`)) {
-      dataFromLocalStorage.push(data[i]);
-     }
-   } 
+
+for (let i = 0; i < localStorage.length; i++) {
+  dataFromLocalStorage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+} 
 
 export default function App() {
   const [rows, setRows] = useState(dataFromLocalStorage);
@@ -71,7 +70,7 @@ export default function App() {
     const length = data.length + 1;
     setRows(rows.concat([{...inputs, id: length}]));
     data.push({...inputs, id: length});
-    localStorage.setItem(`id${length}`, length);
+    localStorage.setItem(`id${length}`, JSON.stringify({...inputs, id: length}));
   }
 
   return (
