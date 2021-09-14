@@ -13,7 +13,7 @@ code {
 }
 
 body .delete-button {
-  margin: 10px 0;
+  margin: 10px 0 5px 0;
 }
 
 .form {
@@ -23,13 +23,13 @@ body .delete-button {
 
 .form button {
   width: 50px;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .form input {
   width: 200px;
   height: 30px;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .color-picker {
