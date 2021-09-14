@@ -10,20 +10,24 @@ export function Form({addNewRow}) {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        setInputs({
-            ...inputs,
-            [name]: value,
-        })
+            setInputs({
+                ...inputs,
+                [name]: value,
+            })
     }
 
     const handleClick = () => {
-        addNewRow(inputs);
+        if (inputs.name && inputs.type) {
+            addNewRow(inputs);
+        } else {
+            alert("Заполните все поля!");
+        }
     }
 
     return(
         <div className="form">
-            <input onChange={handleChange} placeholder="name" name="name" type='text'></input>
-            <input onChange={handleChange} placeholder="type" name="type" type='text'></input>
+            <input onChange={handleChange} placeholder="name" name="name" type="text"></input>
+            <input onChange={handleChange} placeholder="type" name="type" type="text"></input>
             <Button 
                 onClick={handleClick}
                 variant="contained" 

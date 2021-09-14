@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Table } from './components/Table';
 import { Form } from './components/Form';
 import { ColorPicker } from './components/ColorPicker';
@@ -67,8 +67,13 @@ export default function App() {
 
   const handleDeleteClick = () => {
     const set = new Set(selectedRows);
-    setRows(rows.filter(row => !set.has(row.id)));
-    selectedRows.forEach(row => localStorage.removeItem(`id${row}`));
+    if (set.size) {
+      setRows(rows.filter(row => !set.has(row.id)));
+      selectedRows.forEach(row => localStorage.removeItem(`id${row}`));
+    } else {
+      alert("Вы не выбрали ни одну из строчек!");
+    }
+    
   }
 
   const addNewRow = (inputs) => {
@@ -105,7 +110,7 @@ export default function App() {
       onSelectionChange={handleSelectionChange}
       onEditRow={editRow}
      />
-     <Button 
+     <Button className="delete-button"
       onClick={handleDeleteClick}
       variant="contained" 
       color="secondary"

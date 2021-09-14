@@ -22,7 +22,7 @@ export function ColorPicker({visibility, currentColor, id, rows, changeColorInRo
     }
 
     return (
-        <div className={visibility ? 'color-picker' : 'hide'}>
+        <div className={visibility ? "color-picker" : "hide"}>
             <SketchPicker
                 color={color}
                 onChangeComplete={(color) => handleColorChange(color)}
