@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
 
 export function Form({addNewRow}) {
     const [inputs, setInputs] = useState({name: '', 
@@ -20,11 +21,14 @@ export function Form({addNewRow}) {
     }
 
     return(
-        <div>
+        <div className="form">
             <input onChange={handleChange} placeholder="name" name="name" type='text'></input>
             <input onChange={handleChange} placeholder="type" name="type" type='text'></input>
-            <input onChange={handleChange} placeholder="color" name="color" type='text'></input>
-            <button onClick={handleClick}>Add</button>
+            <Button 
+                onClick={handleClick}
+                variant="contained" 
+                color="primary"
+            >Add</Button>
         </div>
     )
 }

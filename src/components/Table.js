@@ -1,7 +1,8 @@
 import React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 
-export function Table({columns, rows, onSelectionChange}) {
+export function Table({columns, rows, onSelectionChange, onEditRow}) {
+
   return (
     <div style={{width: '100%'}}>
       <DataGrid
@@ -10,6 +11,7 @@ export function Table({columns, rows, onSelectionChange}) {
         pageSize={5}
         checkboxSelection
         onSelectionModelChange={onSelectionChange}
+        onEditRowsModelChange={onEditRow}
         autoHeight
       />
     </div>
