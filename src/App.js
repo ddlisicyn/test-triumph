@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from './components/Table';
 import { Form } from './components/Form';
+import { ColorPicker } from './components/ColorPicker';
+import { Button } from '@material-ui/core';
 
 const columns = [
   {
@@ -35,9 +37,9 @@ const columns = [
 const data = [
   { id: 1, name: 'name1', type: 'main', color: '#f4f4f4'},
   { id: 2, name: 'name2', type: 'side', color: '#f8f8f8'},
-  { id: 3, name: 'name3', type: 'side', color: '#f8f8f8'},
+  { id: 3, name: 'name3', type: 'section', color: '#f2f2f2'},
   { id: 4, name: 'name4', type: 'side', color: '#f8f8f8'},
-  { id: 5, name: 'name5', type: 'side', color: '#f8f8f8'},
+  { id: 5, name: 'name5', type: 'article', color: '#f4f4f4'},
 ];
 
 if (!localStorage.getItem('id1')) {
@@ -55,6 +57,9 @@ for (let i = 0; i < localStorage.length; i++) {
 export default function App() {
   const [rows, setRows] = useState(dataFromLocalStorage);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [currentColor, setCurrentColor] = useState('');
+  const [visibility, setVisibility] = useState(false);
+  const [id, setId] = useState();
 
   const handleSelectionChange = (selection) => {
     setSelectedRows(selection);
@@ -78,10 +83,19 @@ export default function App() {
     if (!!id) {
       const [property] = Object.keys(row[id]);
       const obj = JSON.parse(localStorage.getItem(`id${id}`));
+      if (property === 'color') {
+        setId(id);
+        setVisibility(true);
+        setCurrentColor(row[id][`${property}`].value);
+      }
       obj[`${property}`] = row[id][`${property}`].value;
       localStorage.setItem(`id${id}`, JSON.stringify(obj));
     }
   }
+  
+  const changeColorInRow = (Rows) => setRows(Rows);
+
+  const changeVisibility = () => setVisibility(false);
 
   return (
     <div style={{width: '100%'}}>
@@ -91,8 +105,20 @@ export default function App() {
       onSelectionChange={handleSelectionChange}
       onEditRow={editRow}
      />
-     <button onClick={handleDeleteClick}>Delete</button>
+     <Button 
+      onClick={handleDeleteClick}
+      variant="contained" 
+      color="secondary"
+     >Delete</Button>
      <Form addNewRow={addNewRow} />
+     <ColorPicker 
+      visibility={visibility}
+      currentColor={currentColor}
+      id={id}
+      rows={rows}
+      changeColorInRow={changeColorInRow}
+      changeVisibility={changeVisibility}
+     />
     </div>
   );
 }
