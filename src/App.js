@@ -8,7 +8,7 @@ const columns = [
     headerName: 'name',
     type: 'string',
     minWidth: 90,
-    sortable: false,
+    sortable: true,
     editable: true,
     disableColumnMenu: true,
   },
@@ -73,12 +73,23 @@ export default function App() {
     localStorage.setItem(`id${length}`, JSON.stringify({...inputs, id: length}));
   }
 
+  const editRow = (row) => {
+    const [id] = Object.keys(row);
+    if (!!id) {
+      const [property] = Object.keys(row[id]);
+      const obj = JSON.parse(localStorage.getItem(`id${id}`));
+      obj[`${property}`] = row[id][`${property}`].value;
+      localStorage.setItem(`id${id}`, JSON.stringify(obj));
+    }
+  }
+
   return (
     <div style={{width: '100%'}}>
      <Table
       rows={rows} 
       columns={columns}
       onSelectionChange={handleSelectionChange}
+      onEditRow={editRow}
      />
      <button onClick={handleDeleteClick}>Delete</button>
      <Form addNewRow={addNewRow} />
