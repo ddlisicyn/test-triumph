@@ -21,13 +21,23 @@ export function ColorPicker({visibility, currentColor, id, rows, changeColorInRo
         changeColorInRow(newRow);
     }
 
+    const handleChangeVisibility = (e) => {
+        if (e.target.className === 'wrapper__color-picker') {
+            changeVisibility();
+        }
+    }
+
     return (
-        <div className={visibility ? "color-picker" : "hide"}>
-            <SketchPicker
-                color={color}
-                onChangeComplete={(color) => handleColorChange(color)}
-            />
-            <button onClick={changeVisibility}>Close color picker</button>
+        <div 
+            className={visibility ? "wrapper__color-picker" : "hide"}
+            onClick={handleChangeVisibility}
+        >
+            <div className="color-picker">
+                <SketchPicker
+                    color={color}
+                    onChangeComplete={(color) => handleColorChange(color)}
+                />
+            </div>
         </div>
 
     )

@@ -106,7 +106,8 @@ export default function App() {
   const changeVisibility = () => setVisibility(false);
 
   return (
-    <div style={{width: '100%'}}>
+    <>
+    <div className="main">
         <div className="table-manipulation">
           <Form addNewRow={addNewRow} />
           <Button
@@ -121,7 +122,8 @@ export default function App() {
           onSelectionChange={handleSelectionChange}
           onEditRow={editRow}
         />
-        <ColorPicker 
+    </div>
+    <ColorPicker 
           visibility={visibility}
           currentColor={currentColor}
           id={id}
@@ -129,6 +131,6 @@ export default function App() {
           changeColorInRow={changeColorInRow}
           changeVisibility={changeVisibility}
         />
-    </div>
+    </>
   );
 }
