@@ -8,7 +8,6 @@ export function Table({columns, rows, onSelectionChange, onEditRow}) {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
         checkboxSelection
         onSelectionModelChange={onSelectionChange}
         onEditRowsModelChange={onEditRow}

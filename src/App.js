@@ -10,6 +10,7 @@ const columns = [
     headerName: 'name',
     type: 'string',
     minWidth: 90,
+    flex: 1,
     sortable: true,
     editable: true,
     disableColumnMenu: true,
@@ -19,6 +20,7 @@ const columns = [
     headerName: 'type',
     type: 'string',
     minWidth: 90,
+    flex: 1,
     sortable: false,
     editable: true,
     disableColumnMenu: true
@@ -30,6 +32,7 @@ const columns = [
     sortable: false,
     editable: true,
     minWidth: 90,
+    flex: 1,
     disableColumnMenu: true,
   },
 ];
@@ -42,7 +45,7 @@ const data = [
   { id: 5, name: 'name5', type: 'article', color: '#f4f4f4'},
 ];
 
-if (!localStorage.getItem('id1')) {
+if (localStorage.length === 0) {
   data.forEach(item => {
     localStorage.setItem(`id${item.id}`, JSON.stringify(item));
   })
