@@ -107,26 +107,28 @@ export default function App() {
 
   return (
     <div style={{width: '100%'}}>
-     <Table
-      rows={rows} 
-      columns={columns}
-      onSelectionChange={handleSelectionChange}
-      onEditRow={editRow}
-     />
-     <Button className="delete-button"
-      onClick={handleDeleteClick}
-      variant="contained" 
-      color="secondary"
-     >Delete</Button>
-     <Form addNewRow={addNewRow} />
-     <ColorPicker 
-      visibility={visibility}
-      currentColor={currentColor}
-      id={id}
-      rows={rows}
-      changeColorInRow={changeColorInRow}
-      changeVisibility={changeVisibility}
-     />
+        <div className="table-manipulation">
+          <Form addNewRow={addNewRow} />
+          <Button
+            onClick={handleDeleteClick}
+            variant="contained" 
+            color="secondary"
+          >Delete</Button>
+        </div>
+        <Table
+          rows={rows} 
+          columns={columns}
+          onSelectionChange={handleSelectionChange}
+          onEditRow={editRow}
+        />
+        <ColorPicker 
+          visibility={visibility}
+          currentColor={currentColor}
+          id={id}
+          rows={rows}
+          changeColorInRow={changeColorInRow}
+          changeVisibility={changeVisibility}
+        />
     </div>
   );
 }

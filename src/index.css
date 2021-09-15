@@ -12,24 +12,44 @@ code {
     monospace;
 }
 
-body .delete-button {
-  margin: 10px 0 5px 0;
+.table-manipulation {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 1% 0;
+  justify-content: space-between;
+}
+
+.table-manipulation button {
+  margin: 0 2% 0 0;
+  max-height: 35px;
+}
+
+.table-manipulation button:last-child {
+  margin: 0;
+  max-height: 35px;
 }
 
 .form {
+  width: 80%;
   display: flex;
-  flex-direction: column;
-}
-
-.form button {
-  width: 50px;
-  margin: 5px 0;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .form input {
-  width: 200px;
-  height: 30px;
-  margin: 5px 0;
+  margin: 1% 2% 1% 0;
+  height: 25px;
+}
+
+.form__buttom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.form__buttom input {
+  margin-right: 10px;
 }
 
 .color-picker {
