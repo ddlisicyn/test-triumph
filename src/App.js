@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
 import { Table } from './components/Table';
 import { Form } from './components/Form';
-import { Button } from '@material-ui/core';
 import { data } from './data/data';
 
 const columns = [
@@ -23,7 +23,7 @@ const columns = [
     flex: 1,
     sortable: false,
     editable: true,
-    disableColumnMenu: true
+    disableColumnMenu: true,
   },
   {
     field: 'color',
@@ -33,12 +33,12 @@ const columns = [
     editable: false,
     minWidth: 90,
     flex: 1,
-    disableColumnMenu: true
-  },
+    disableColumnMenu: true,
+  }
 ];
 
 if (localStorage.length === 0) {
-  data.forEach(item => {
+  data.forEach((item) => {
     localStorage.setItem(`id${item.id}`, JSON.stringify(item));
   })
 }
@@ -48,7 +48,7 @@ const dataFromLocalStorage = [];
 for (let i = 0; i < localStorage.length; i++) {
   const key = localStorage.key(i);
   dataFromLocalStorage.push(JSON.parse(localStorage.getItem(key)));
-} 
+}
 
 export default function App() {
   const [rows, setRows] = useState(dataFromLocalStorage);
@@ -61,10 +61,10 @@ export default function App() {
   const handleDeleteClick = () => {
     const set = new Set(selectedRows);
     if (set.size) {
-      setRows(rows.filter(row => !set.has(row.id)));
-      selectedRows.forEach(row => localStorage.removeItem(`id${row}`));
+      setRows(rows.filter((row) => !set.has(row.id)));
+      selectedRows.forEach((row) => localStorage.removeItem(`id${row}`));
     } else {
-      alert("Вы не выбрали ни одну из строчек!");
+      alert('Вы не выбрали ни одну из строчек!');
     }
   }
 
@@ -74,35 +74,37 @@ export default function App() {
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       updatedRows.push(JSON.parse(localStorage.getItem(key)));
-    } 
+    }
     setRows(updatedRows);
   }
 
   const addNewRow = (inputs) => {
     const length = localStorage.length + 1;
-    setRows(rows.concat([{...inputs, id: length}]));
-    data.push({...inputs, id: length});
-    localStorage.setItem(`id${length}`, JSON.stringify({...inputs, id: length}));
+    setRows(rows.concat([{ ...inputs, id: length }]));
+    data.push({ ...inputs, id: length });
+    localStorage.setItem(`id${length}`, JSON.stringify({ ...inputs, id: length }));
   }
 
   return (
     <>
-    <div className="main">
+      <div className="main">
         <div className="table-manipulation">
           <Form addNewRow={addNewRow} />
           <Button
             onClick={handleDeleteClick}
-            variant="contained" 
+            variant="contained"
             color="secondary"
-          >Delete</Button>
+          >
+            Delete
+          </Button>
         </div>
         <Table
-          rows={rows} 
+          rows={rows}
           columns={columns}
           onSelectionChange={handleSelectionChange}
           updateRows={updateRows}
         />
-    </div>
+      </div>
     </>
   );
 }
