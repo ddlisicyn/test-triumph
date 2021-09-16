@@ -69,15 +69,15 @@ export default function App() {
 
   const updateRows = (editibleRow) => {
     const rows = JSON.parse(localStorage.getItem('data'));
-    const updatedRows = rows.map(row => (row.id === editibleRow.id) ? editibleRow : row);
+    const updatedRows = rows.map((row) => (row.id === editibleRow.id ? editibleRow : row));
     setRows(updatedRows);
     localStorage.setItem('data', JSON.stringify(updatedRows));
   }
 
   const addNewRow = (inputs) => {
     const rows = JSON.parse(localStorage.getItem('data'));
-    console.log(rows);
-    const row = { ...inputs, id: rows.length + 1 };
+    const lastId = rows[rows.length - 1].id;
+    const row = { ...inputs, id: lastId + 1 };
     rows.push(row)
     setRows(rows);
     localStorage.setItem('data', JSON.stringify(rows));
