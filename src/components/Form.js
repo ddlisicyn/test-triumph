@@ -11,10 +11,10 @@ export function Form({addNewRow}) {
         const value = target.value;
         const name = target.name;
 
-        setInputs((lastInputs) => ({
-            ...lastInputs,
+        setInputs({
+            ...inputs,
             [name]: value,
-        }))
+        })
     }
 
     const handleClick = () => {
