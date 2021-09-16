@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Table } from './components/Table';
 import { Form } from './components/Form';
-import { ColorPicker } from './components/ColorPicker';
 import { Button } from '@material-ui/core';
+import { data } from './data/data';
 
 const columns = [
   {
@@ -30,19 +30,11 @@ const columns = [
     headerName: 'color',
     type: 'string',
     sortable: false,
-    editable: true,
+    editable: false,
     minWidth: 90,
     flex: 1,
-    disableColumnMenu: true,
+    disableColumnMenu: true
   },
-];
-
-const data = [
-  { id: 1, name: 'name1', type: 'main', color: '#f4f4f4'},
-  { id: 2, name: 'name2', type: 'side', color: '#f8f8f8'},
-  { id: 3, name: 'name3', type: 'section', color: '#f2f2f2'},
-  { id: 4, name: 'name4', type: 'side', color: '#f8f8f8'},
-  { id: 5, name: 'name5', type: 'article', color: '#f4f4f4'},
 ];
 
 if (localStorage.length === 0) {
@@ -53,16 +45,14 @@ if (localStorage.length === 0) {
 
 const dataFromLocalStorage = [];
 
-for (let i = 1; i < localStorage.length + 1; i++) {
-  dataFromLocalStorage.push(JSON.parse(localStorage.getItem(`id${i}`)));
+for (let i = 0; i < localStorage.length; i++) {
+  const key = localStorage.key(i);
+  dataFromLocalStorage.push(JSON.parse(localStorage.getItem(key)));
 } 
 
 export default function App() {
   const [rows, setRows] = useState(dataFromLocalStorage);
   const [selectedRows, setSelectedRows] = useState([]);
-  const [visibility, setVisibility] = useState(false);
-  const [currentColor, setCurrentColor] = useState('');
-  const [id, setId] = useState();
 
   const handleSelectionChange = (selection) => {
     setSelectedRows(selection);
@@ -76,7 +66,16 @@ export default function App() {
     } else {
       alert("Вы не выбрали ни одну из строчек!");
     }
-    
+  }
+
+  const updateRows = (row) => {
+    localStorage.setItem(`id${row.id}`, JSON.stringify(row));
+    const updatedRows = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      updatedRows.push(JSON.parse(localStorage.getItem(key)));
+    } 
+    setRows(updatedRows);
   }
 
   const addNewRow = (inputs) => {
@@ -85,25 +84,6 @@ export default function App() {
     data.push({...inputs, id: length});
     localStorage.setItem(`id${length}`, JSON.stringify({...inputs, id: length}));
   }
-
-  const editRow = (row) => {
-    const [id] = Object.keys(row);
-    if (!!id) {
-      const [property] = Object.keys(row[id]);
-      const obj = JSON.parse(localStorage.getItem(`id${id}`));
-      if (property === 'color') {
-        setCurrentColor(obj[property]);
-        setId(id);
-        setVisibility(true);
-      }
-      obj[`${property}`] = row[id][`${property}`].value;
-      localStorage.setItem(`id${id}`, JSON.stringify(obj));
-    }
-  }
-  
-  const changeColorInRow = (rows) => setRows(rows);
-
-  const changeVisibility = () => setVisibility(false);
 
   return (
     <>
@@ -120,16 +100,9 @@ export default function App() {
           rows={rows} 
           columns={columns}
           onSelectionChange={handleSelectionChange}
-          onEditRow={editRow}
+          updateRows={updateRows}
         />
     </div>
-    <ColorPicker 
-          visibility={visibility}
-          currentColor={currentColor}
-          id={id}
-          changeColorInRow={changeColorInRow}
-          changeVisibility={changeVisibility}
-        />
     </>
   );
 }
