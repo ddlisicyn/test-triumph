@@ -16,6 +16,7 @@
       "no-param-reassign": "off",
       "jsx-a11y/click-events-have-key-events": "off",
       "jsx-a11y/no-static-element-interactions": "off",
+      "linebreak-style": "off",
       "comma-dangle": ["warn", {
         "arrays": "never",
         "objects": "always-multiline",

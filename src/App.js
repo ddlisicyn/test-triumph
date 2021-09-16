@@ -76,7 +76,7 @@ export default function App() {
 
   const addNewRow = (inputs) => {
     const rows = JSON.parse(localStorage.getItem('data'));
-    const lastId = rows[rows.length - 1].id;
+    const lastId = rows[rows.length - 1]?.id || 1;
     const row = { ...inputs, id: lastId + 1 };
     rows.push(row)
     setRows(rows);
