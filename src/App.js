@@ -37,17 +37,15 @@ const columns = [
   }
 ];
 
-if (localStorage.length === 0) {
-  data.forEach((item) => {
-    localStorage.setItem(`id${item.id}`, JSON.stringify(item));
-  })
+if (localStorage.getItem('data') === null) {
+  localStorage.setItem('data', JSON.stringify(data));
 }
 
-const dataFromLocalStorage = [];
-
-for (let i = 0; i < localStorage.length; i++) {
-  const key = localStorage.key(i);
-  dataFromLocalStorage.push(JSON.parse(localStorage.getItem(key)));
+let dataFromLocalStorage;
+try {
+  dataFromLocalStorage = JSON.parse(localStorage.getItem('data'));
+} catch (e) {
+  console.log(e);
 }
 
 export default function App() {
@@ -61,28 +59,28 @@ export default function App() {
   const handleDeleteClick = () => {
     const set = new Set(selectedRows);
     if (set.size) {
-      setRows(rows.filter((row) => !set.has(row.id)));
-      selectedRows.forEach((row) => localStorage.removeItem(`id${row}`));
+      const filteredRows = rows.filter((row) => !set.has(row.id));
+      setRows(filteredRows);
+      localStorage.setItem('data', JSON.stringify(filteredRows));
     } else {
       alert('Вы не выбрали ни одну из строчек!');
     }
   }
 
-  const updateRows = (row) => {
-    localStorage.setItem(`id${row.id}`, JSON.stringify(row));
-    const updatedRows = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      updatedRows.push(JSON.parse(localStorage.getItem(key)));
-    }
+  const updateRows = (editibleRow) => {
+    const rows = JSON.parse(localStorage.getItem('data'));
+    const updatedRows = rows.map(row => (row.id === editibleRow.id) ? editibleRow : row);
     setRows(updatedRows);
+    localStorage.setItem('data', JSON.stringify(updatedRows));
   }
 
   const addNewRow = (inputs) => {
-    const length = localStorage.length + 1;
-    setRows(rows.concat([{ ...inputs, id: length }]));
-    data.push({ ...inputs, id: length });
-    localStorage.setItem(`id${length}`, JSON.stringify({ ...inputs, id: length }));
+    const rows = JSON.parse(localStorage.getItem('data'));
+    console.log(rows);
+    const row = { ...inputs, id: rows.length + 1 };
+    rows.push(row)
+    setRows(rows);
+    localStorage.setItem('data', JSON.stringify(rows));
   }
 
   return (

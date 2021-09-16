@@ -60,6 +60,7 @@ code {
 .wrapper__color-picker {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -74,7 +75,7 @@ code {
   display: flex;
   user-select: none;
   align-items: center;
-  cursor: pointer;
+  cursor: text;
 }
 
 .color__preview {

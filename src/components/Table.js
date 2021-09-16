@@ -35,10 +35,6 @@ export function Table({
     openColorpicker();
   }
 
-  const handleColorChange = (color) => {
-    console.log(color);
-  }
-
   return (
     <div style={{ width: '100%' }}>
       <DataGrid
@@ -64,7 +60,6 @@ export function Table({
         defaultColor={defaultColor}
         visibility={visibility}
         closeColorpicker={closeColorpicker}
-        handleColorChange={handleColorChange}
         openColorpicker={openColorpicker}
         editColor={editColor}
       />

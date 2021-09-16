@@ -13,8 +13,11 @@ export function Form({ addNewRow }) {
   const openColorpicker = () => setVisibility(true);
   const closeColorpicker = () => setVisibility(false);
 
-  const editColor = () => {
-
+  const editColor = (color) => {
+    setInputs({
+      ...inputs,
+      color,
+    })
   }
 
   const handleChange = ({ target: { name, value } }) => {
@@ -31,6 +34,11 @@ export function Form({ addNewRow }) {
   const handleClick = () => {
     if (inputs.name && inputs.type && inputs.color) {
       addNewRow(inputs);
+      setInputs({
+        name: '',
+        type: '',
+        color: '',
+      });
     } else {
       alert('Заполните все поля!');
     }
@@ -39,8 +47,8 @@ export function Form({ addNewRow }) {
   return (
     <>
       <div className="form">
-        <input onChange={handleChange} placeholder="name" name="name" type="text" />
-        <input onChange={handleChange} placeholder="type" name="type" type="text" />
+        <input onChange={handleChange} placeholder="name" name="name" type="text" value={inputs.name} />
+        <input onChange={handleChange} placeholder="type" name="type" type="text" value={inputs.type} />
         <div className="form__buttom">
           <input
             onChange={handleChange}
@@ -49,6 +57,8 @@ export function Form({ addNewRow }) {
             name="color"
             type="text"
             autoComplete="off"
+            value={inputs.color}
+            readOnly
           />
           <Button
             onClick={handleClick}
