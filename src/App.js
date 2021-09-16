@@ -53,15 +53,15 @@ if (localStorage.length === 0) {
 
 const dataFromLocalStorage = [];
 
-for (let i = 0; i < localStorage.length; i++) {
-  dataFromLocalStorage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+for (let i = 1; i < localStorage.length + 1; i++) {
+  dataFromLocalStorage.push(JSON.parse(localStorage.getItem(`id${i}`)));
 } 
 
 export default function App() {
   const [rows, setRows] = useState(dataFromLocalStorage);
   const [selectedRows, setSelectedRows] = useState([]);
-  const [currentColor, setCurrentColor] = useState('');
   const [visibility, setVisibility] = useState(false);
+  const [currentColor, setCurrentColor] = useState('');
   const [id, setId] = useState();
 
   const handleSelectionChange = (selection) => {
@@ -80,7 +80,7 @@ export default function App() {
   }
 
   const addNewRow = (inputs) => {
-    const length = data.length + 1;
+    const length = localStorage.length + 1;
     setRows(rows.concat([{...inputs, id: length}]));
     data.push({...inputs, id: length});
     localStorage.setItem(`id${length}`, JSON.stringify({...inputs, id: length}));
@@ -92,16 +92,16 @@ export default function App() {
       const [property] = Object.keys(row[id]);
       const obj = JSON.parse(localStorage.getItem(`id${id}`));
       if (property === 'color') {
+        setCurrentColor(obj[property]);
         setId(id);
         setVisibility(true);
-        setCurrentColor(row[id][`${property}`].value);
       }
       obj[`${property}`] = row[id][`${property}`].value;
       localStorage.setItem(`id${id}`, JSON.stringify(obj));
     }
   }
   
-  const changeColorInRow = (Rows) => setRows(Rows);
+  const changeColorInRow = (rows) => setRows(rows);
 
   const changeVisibility = () => setVisibility(false);
 
@@ -127,7 +127,6 @@ export default function App() {
           visibility={visibility}
           currentColor={currentColor}
           id={id}
-          rows={rows}
           changeColorInRow={changeColorInRow}
           changeVisibility={changeVisibility}
         />

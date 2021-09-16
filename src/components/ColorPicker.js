@@ -1,29 +1,26 @@
 import React, { useState } from 'react'
 import { SketchPicker } from 'react-color';
 
-export function ColorPicker({visibility, currentColor, id, rows, changeColorInRow, changeVisibility}) {
-    const [color, setColor] = useState(`${currentColor}`);
+export function ColorPicker({visibility, currentColor, id, changeColorInRow, changeVisibility}) {
+    const [color, setColor] = useState(currentColor);
 
     const handleColorChange = (color) => {
-        setColor(color);
-
+        setColor(color.hex);
         const obj = JSON.parse(localStorage.getItem(`id${id}`))
         obj.color = color.hex;
         localStorage.setItem(`id${id}`, JSON.stringify(obj));
-        
-        const newRow = rows.map(row => {
-            if (row.id == id) {
-                row.color = color.hex;
-            }
-            return row;
-        });
-
-        changeColorInRow(newRow);
     }
 
     const handleChangeVisibility = (e) => {
         if (e.target.className === 'wrapper__color-picker') {
+            const newRows = [];
+
+            for (let i = 1; i < localStorage.length + 1; i++) {
+                newRows.push(JSON.parse(localStorage.getItem(`id${i}`)));
+            }
+            changeColorInRow(newRows);
             changeVisibility();
+            
         }
     }
 
