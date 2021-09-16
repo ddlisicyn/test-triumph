@@ -12,14 +12,14 @@ code {
     monospace;
 }
 
-.main {
-  margin: 1%;
+.MuiDataGrid-root {
+  margin: 0 1%;
 }
 
 .table-manipulation {
   display: flex;
   flex-direction: row;
-  margin: 0 0 1% 0;
+  margin: 0 0 1% 1%;
   justify-content: space-between;
   align-items: center;
 }
@@ -30,7 +30,7 @@ code {
 }
 
 .table-manipulation button:last-child {
-  margin: 0;
+  margin: 0 1% 0 0;
   max-height: 35px;
 }
 
@@ -60,17 +60,28 @@ code {
 .wrapper__color-picker {
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
   background: rgba(0, 0, 0, .3);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
-.color-picker {
-  
+.color__wrapper {
+  display: flex;
+  user-select: none;
+  align-items: center;
+  cursor: text;
+}
+
+.color__preview {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
 }
 
 .hide {
